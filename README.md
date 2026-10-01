@@ -10,10 +10,15 @@ Pages.
 - A chibi boy drawn in SVG in a *Pokémon X/Y & ORAS trainer* style, with a walk
   cycle, moods, blinks, gestures and a cosy room that changes with the time of day
 - An autonomous "brain": he wanders, checks in, tells jokes, compliments her and
-  sends nudges (while the tab is open)
+  sends nudges (while the tab is open). He also quietly does things on his own —
+  and how much he talks is adjustable in settings
 - A rule/flow conversation engine: intent detection, sentiment, shout detection,
   fact memory, multi-turn problem-solving and stories-with-morals
-- Offline browser voice: he can speak and listen (Web Speech API)
+- **Surprises**: he sends her to nice corners of the internet (Radio Garden,
+  WindowSwap, Rainy Mood…) and makes her little things — doodles, poems,
+  coupons and fortunes — as tappable cards
+- Offline browser voice: he can speak and listen (Web Speech API). He auto-picks
+  a male voice and pitches it down; you can override the voice in settings
 
 ## Run it locally
 

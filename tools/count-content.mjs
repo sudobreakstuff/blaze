@@ -10,6 +10,7 @@ import { musings } from "../content/musings.js";
 import { intentReplies, questionBanks, branches, pathReplies, pathOptions } from "../content/intents.js";
 import { inside } from "../content/inside.js";
 import { stories } from "../content/stories.js";
+import { places, coupons, fortunes } from "../content/surprises.js";
 import { GRAMMAR_KINDS, slots } from "../js/grammar.js";
 
 const SKIP = new Set(["tags", "title"]);
@@ -45,6 +46,12 @@ for (const s of stories) { storyLines.push(...s.parts); if (s.moral) storyLines.
 total += storyLines.length;
 all.push(...storyLines);
 console.log(`  ${"stories".padEnd(16)} ${String(storyLines.length).padStart(5)}  (${stories.length} stories)`);
+
+// surprises
+const surpriseLines = [...places.map((p) => p.blurb), ...coupons.flatMap((c) => [c.title, c.text]), ...fortunes];
+total += surpriseLines.length;
+all.push(...surpriseLines);
+console.log(`  ${"surprises".padEnd(16)} ${String(surpriseLines.length).padStart(5)}  (${places.length} places, ${coupons.length} coupons)`);
 
 console.log("--------------------");
 console.log(`  authored lines   ${String(total).padStart(5)}`);

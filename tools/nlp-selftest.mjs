@@ -18,6 +18,10 @@ const cases = [
   { text: "i got the job!!", want: { intent: "good_news" } },
   { text: "can't sleep again", want: { intent: "sleep_help" } },
   { text: "my nails look so good", want: { intent: "girly" } },
+  { text: "what is your name?", want: { intent: "ask_name" } },
+  { text: "who are you", want: { intent: "ask_name" } },
+  { text: "surprise me", want: { intent: "surprise" } },
+  { text: "what can you do", want: { intent: "abilities" } },
 ];
 
 let pass = 0, fail = 0;

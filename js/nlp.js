@@ -73,6 +73,9 @@ export const INTENTS = {
   question:      { ph: ["?", "why", "how", "what", "when", "where", "who"] },
   compliment_give:{ kw: ["handsome", "cute", "amazing", "sweet", "best"], ph: ["you're so", "youre so", "you are so", "i like you", "you're the best"] },
   insult_playful:{ kw: ["stupid", "dumb", "silly", "loser", "idiot", "shush", "quiet"], ph: ["shut up", "you're silly", "youre silly"] },
+  ask_name:      { kw: ["name"], ph: ["your name", "whats your name", "what is your name", "who are you", "what are you", "whats your name?", "are you blaze"] },
+  abilities:     { kw: ["abilities", "capable"], ph: ["what can you do", "what do you do", "what are you for", "what are you good at"] },
+  surprise:      { kw: ["surprise", "gift", "present"], ph: ["surprise me", "give me a gift", "send me something", "show me something", "make me something", "take me somewhere", "send me a link", "something to do", "i'm bored, entertain me"] },
 };
 
 export function normalize(text) {

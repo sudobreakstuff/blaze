@@ -3,6 +3,7 @@
 import { store } from "./store.js";
 import { dialogueState, autonomousBeats } from "./dialogue.js";
 import { blaze } from "./blaze.js";
+import { pick } from "./rng.js";
 
 const BASE_TITLE = "blaze 🌙";
 const NUDGE_TITLE = "🌙 blaze misses you";
@@ -12,7 +13,7 @@ class Brain {
     this.onSay = () => {};
     this.onMood = () => {};
     this.lastInteraction = Date.now();
-    this.nextAmbient = Date.now() + 6000;
+    this.nextAmbient = Date.now() + 9000;
     this.enabled = true;
     this._titleTimer = null;
     this._nudged = false;
@@ -64,21 +65,30 @@ class Brain {
       this.onMood(m);
     }
 
-    if (document.hidden) return;           // don't talk to an empty room
-    if (idleMs < 9000) return;             // she's actively here
+    if (document.hidden) return;                 // don't talk to an empty room
+    if (idleMs < 12000) return;                  // she's actively here
     if (dialogueState().mode === "story") return; // don't interrupt stories
     if (Date.now() < this.nextAmbient) return;
 
-    // if she's gone quiet for a long stretch, check in
-    if (idleMs > 150000 && Math.random() < 0.5) {
-      this.onSay({ beats: [{ text: "you still there, moon? no pressure. i'm just nosy 🌙", mood: "think", hearts: false }] });
-      this.nextAmbient = Date.now() + 90000;
+    const chat = store.pref("chattiness", 1);
+    const mult = chat <= 0 ? 3.2 : chat >= 2 ? 0.5 : 1;
+
+    // rare check-in after a long silence
+    if (idleMs > 240000 && Math.random() < 0.4) {
+      this.onSay({ beats: [{ text: pick(["you still there, moon? no pressure 🌙", "just checking you haven't been eaten by the support queue.", "i'm bored and you're my favourite person. no obligation."]), mood: "think", hearts: false }] });
+      this.nextAmbient = Date.now() + 120000;
       return;
     }
 
-    this.nextAmbient = Date.now() + 14000 + Math.random() * 26000;
+    this.nextAmbient = Date.now() + (40000 + Math.random() * 80000) * mult;
+
+    // sometimes he just stays quiet — makes him feel less mechanical
+    if (Math.random() < 0.32) return;
+
     const a = autonomousBeats();
     if (a.greeting) store.markGreeted();
+    if (a.silent) { if (a.action) blaze.react(a.action); return; }
+    if (!a.beats || !a.beats.length) return;
     this.onSay(a);
   }
 

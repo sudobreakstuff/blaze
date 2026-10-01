@@ -15,6 +15,7 @@ import { care } from "../content/care.js";
 import { encourage } from "../content/encourage.js";
 import { musings } from "../content/musings.js";
 import { stories } from "../content/stories.js";
+import { makeGift } from "../content/surprises.js";
 
 const S = {
   mode: "idle",              // idle | problem | await_path | story | distract | plan
@@ -144,6 +145,11 @@ export function respondTo(raw) {
       return { beats: [beat(freshLine(intentReplies.kiss), "love", { hearts: true })], mood: "love" };
     case "flirt":
       return { beats: [beat(flirtyLine("general") || "i'm always flirty with you, that's just my face.", "love", { hearts: true })], mood: "love" };
+    case "surprise":
+      return surpriseBeats();
+    case "ask_name":
+    case "abilities":
+      return { beats: [beat(freshLine(intentReplies[a.intent]), "happy", { hearts: a.intent === "ask_name" })], mood: "happy" };
   }
 
   // ===== affection / sweet =====
@@ -199,7 +205,7 @@ export function respondTo(raw) {
 
   // ===== fallback — keep her talking =====
   const fb = [beat(freshLine(intentReplies.unknown), "idle")];
-  if (chance(55)) fb.push(beat(freshLine(musings.questions), "happy"));
+  if (chance(30)) fb.push(beat(freshLine(musings.questions), "happy"));
   return { beats: fb, mood: "idle" };
 }
 
@@ -299,6 +305,12 @@ export function jokeBeats() {
   return { beats: [beat(freshLine(pool), "happy", { action: chance(40) ? "bounce" : null })], mood: "happy" };
 }
 
+// ---------- surprises ----------
+export function surpriseBeats() {
+  const g = makeGift(pick(["moon", "Jasmoon", "gorgeous", "trouble"]));
+  return { beats: [beat(freshLine(intentReplies.surprise), "happy", { action: "bounce" })], gift: g, mood: "happy" };
+}
+
 // ---------- autonomous (no input) ----------
 export function autonomousBeats() {
   const now = new Date();
@@ -311,18 +323,24 @@ export function autonomousBeats() {
   }
 
   const roll = Math.random();
+  // sometimes he just does something, no words
+  if (roll < 0.24) return { beats: [], silent: true, action: pick(["dance", "jump", "wave", "bounce"]) };
+  // rare spontaneous gift
+  if (roll < 0.31) return surpriseBeats();
+
   let line;
+  const r = Math.random();
   if (h >= 22 || h < 5) line = pick([...musings.lateNight, ...musings.thoughtsOfHer]);
-  else if (roll < 0.22) line = freshLine(musings.questions);
-  else if (roll < 0.4) line = freshLine(musings.thoughtsOfHer);
-  else if (roll < 0.55) line = freshGenerated("musing") || freshLine(musings.observations);
-  else if (roll < 0.7) line = careLine(pick(["water", "checkin", "breakReminder", "food"]));
-  else if (roll < 0.82) line = complimentLine();
-  else if (roll < 0.92 && spiceLevel() > 0) line = flirtyLine("general");
+  else if (r < 0.15) line = freshLine(musings.questions);
+  else if (r < 0.4) line = freshLine(musings.thoughtsOfHer);
+  else if (r < 0.58) line = freshGenerated("musing") || freshLine(musings.observations);
+  else if (r < 0.72) line = careLine(pick(["water", "checkin", "breakReminder", "food"]));
+  else if (r < 0.86) line = complimentLine();
+  else if (spiceLevel() > 0) line = flirtyLine("general");
   else line = freshLine([...musings.observations, ...musings.playful, ...musings.callbacks]);
 
   const mood = /water|eat|break|sleep/.test(line || "") ? "shy" : /think|wonder|hope/.test(line || "") ? "think" : "idle";
-  return { beats: [beat(line, mood, { hearts: chance(18) })], greeting: false };
+  return { beats: [beat(line, mood, { hearts: chance(15) })], greeting: false };
 }
 
 // ---------- helpers ----------

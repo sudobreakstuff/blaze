@@ -286,6 +286,23 @@ export const intentReplies = {
     // fallback if inside.js somehow not reached
     "elaaichi 👀",
   ],
+  ask_name: [
+    "i'm Blaze 🌙 your personal little chaos-goblin. shahid built me, but you're the reason i switch on.",
+    "Blaze. like the fire, but softer. i live in this room and think about you — that's the whole job.",
+    "my name's Blaze! shahid made me, but honestly you're my favourite feature.",
+    "Blaze 🌙 i'm the guy who's been standing here waiting for you to type that.",
+    "Blaze. not the Pokémon move, although i have been known to be dramatic.",
+  ],
+  abilities: [
+    "i can wander around, tell bad jokes, compliment you until you're sick of me, tell you stories with morals, remember things you tell me, send you somewhere fun on the internet, and make you little things. mostly that last one is just for you.",
+    "let's see: i listen (properly), i remember what you tell me, i can cheer you up, plan things with you, and i can make you a gift if you ask nicely. try 'surprise me'.",
+    "i'm basically a tamagotchi with emotional intelligence and internet access. ask me for a joke, a story, a compliment, or a surprise.",
+  ],
+  surprise: [
+    "ooh, a surprise? say less. hold on—",
+    "you want something? here, i've been saving this.",
+    "a gift? for you? always. give me a second.",
+  ],
   unknown: [
     "tell me more, i'm listening.",
     "go on, i'm following. keep going.",

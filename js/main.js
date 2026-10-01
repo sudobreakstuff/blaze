@@ -1,10 +1,10 @@
-// Blaze — boot, chat wiring, voice, settings.
+// Blaze — boot, chat wiring, voice, gifts, settings.
 
 import { store } from "./store.js";
 import { blaze, applyTimeOfDay } from "./blaze.js";
 import { brain } from "./brain.js";
 import { analyze } from "./nlp.js";
-import { respondTo, autonomousBeats, greetingLine } from "./dialogue.js";
+import { respondTo, greetingLine } from "./dialogue.js";
 
 const params = new URLSearchParams(location.search);
 const FAST = params.has("fast");
@@ -15,29 +15,27 @@ const $ = (id) => document.getElementById(id);
 const messagesEl = $("messages"), inputEl = $("input"), quickEl = $("quick"), bubbleEl = $("bubble"), bubbleText = $("bubble-text");
 const moodLabel = $("mood-label"), debugEl = $("debug");
 
-const DEFAULT_QUICK = ["tell me a joke", "compliment me 💛", "i'm bored", "how are you?"];
+const DEFAULT_QUICK = ["tell me a joke", "compliment me 💛", "surprise me 🎁", "how are you?"];
 
-let playing = false;
 let bubbleTimer = null;
-let lastBeats = [];
 
 // ---------------- startup ----------------
 function boot() {
   applyTimeOfDay();
   setInterval(applyTimeOfDay, 60000);
+  makeLights();
 
-  const v = store.touchVisit();
+  store.touchVisit();
   syncPrefs();
 
   brain.start({
     onSay: (a) => {
       if (a.greeting) store.markGreeted();
-      playBeats(a.beats, { autonomous: true, notify: a.greeting || false });
+      playBeats(a.beats, { autonomous: true, notify: a.greeting || false }).then(() => { if (a.gift) renderGift(a.gift); });
     },
-    onMood: (m) => { blaze.setMood(m); },
+    onMood: (m) => blaze.setMood(m),
   });
 
-  // first-ever message
   if (store.get("visits", 1) <= 1) {
     store.markGreeted();
     playBeats([{ text: "oh — hi! i'm Blaze 🌙 i've been waiting to meet you.", mood: "happy", action: "wave" }], { autonomous: true });
@@ -46,10 +44,8 @@ function boot() {
     const days = store.daysSinceLastVisit();
     const firstToday = store.get("lastGreetDay") !== new Date().toDateString();
     if (firstToday || days >= 1) {
-      const g = greetingLine(new Date(), true, days);
-      // avoid the duplicate "good morning" from the brain tick
       store.markGreeted();
-      setTimeout(() => playBeats(g, { autonomous: true }), 900);
+      setTimeout(() => playBeats(greetingLine(new Date(), true, days), { autonomous: true }), 900);
     }
   }
 
@@ -78,10 +74,16 @@ function boot() {
     });
   });
   $("pref-spice").addEventListener("input", (e) => store.setPref("spice", Number(e.target.value)));
+  $("pref-chattiness").addEventListener("input", (e) => store.setPref("chattiness", Number(e.target.value)));
   $("pref-voicepick").addEventListener("change", (e) => store.setPref("voiceURI", e.target.value));
 
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("settings").hidden = true; });
   inputEl.addEventListener("focus", () => brain.touch());
+}
+
+function makeLights() {
+  const el = $("lights"); if (!el) return;
+  for (let i = 0; i < 12; i++) { const s = document.createElement("i"); s.style.left = (3 + i * 8.4) + "%"; el.appendChild(s); }
 }
 
 // ---------------- prefs <-> UI ----------------
@@ -91,6 +93,7 @@ function syncPrefs() {
   $("pref-notify").checked = store.pref("notify", false);
   $("pref-effects").checked = store.pref("effects", true);
   $("pref-spice").value = store.pref("spice", 1);
+  $("pref-chattiness").value = store.pref("chattiness", 1);
   updateFactCount();
 }
 
@@ -107,10 +110,9 @@ async function send(text) {
   inputEl.value = "";
   addMessage("her", text);
   store.log("her", text);
-
   renderQuick([]);
   showTyping();
-  await wait(FAST ? 200 : 480 + Math.min(900, text.length * 18));
+  await wait(FAST ? 200 : 420 + Math.min(800, text.length * 15));
   removeTyping();
 
   let res;
@@ -119,6 +121,7 @@ async function send(text) {
 
   await playBeats(res.beats);
   if (res.followUp) await playBeats(res.followUp);
+  if (res.gift) { await wait(200); renderGift(res.gift); }
 
   if (res.offering) renderQuick(res.offering);
   else renderQuick(DEFAULT_QUICK);
@@ -128,14 +131,12 @@ async function send(text) {
 // ---------------- playing beats ----------------
 async function playBeats(beats, opts = {}) {
   if (!beats || !beats.length) return;
-  playing = true;
   for (let i = 0; i < beats.length; i++) {
     const b = beats[i];
-    if (i > 0) { showTyping(); await wait(FAST ? 120 : 520 + (b.text.length * 12)); removeTyping(); }
+    if (i > 0) { showTyping(); await wait(FAST ? 120 : 480 + b.text.length * 10); removeTyping(); }
     emit(b, opts);
-    await wait(FAST ? 120 : Math.min(2600, 700 + b.text.length * 26));
+    await wait(FAST ? 120 : Math.min(2400, 650 + b.text.length * 22));
   }
-  playing = false;
 }
 
 function emit(b, opts = {}) {
@@ -152,13 +153,31 @@ function emit(b, opts = {}) {
   if (opts.notify) brain.maybeNudge(b.text);
 }
 
+// ---------------- gifts ----------------
+function renderGift(g) {
+  if (!g) return;
+  const d = document.createElement("div");
+  d.className = "gift";
+  let html = `<div class="gift-tag">${esc(g.tag || "a gift")}</div>`;
+  if (g.title) html += `<div class="gift-title">${esc(g.title)}</div>`;
+  if (g.text) html += `<div class="gift-text">${esc(g.text).replace(/\n/g, "<br>")}</div>`;
+  if (g.kind === "doodle" && g.svg) html += `<div class="gift-doodle">${g.svg}</div>`;
+  if (g.url) html += `<a class="gift-link" href="${g.url}" target="_blank" rel="noopener noreferrer">take me there ↗</a>`;
+  d.innerHTML = html;
+  messagesEl.appendChild(d);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  blaze.spawnHearts(6);
+  if (store.pref("voice", true) && g.kind !== "doodle") speak(g.title || "i made you something.");
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
 // ---------------- bubbles & messages ----------------
 function showBubble(text) {
   bubbleText.textContent = text;
   bubbleEl.hidden = false;
   bubbleEl.style.animation = "none"; void bubbleEl.offsetWidth; bubbleEl.style.animation = "";
   if (bubbleTimer) clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(() => { bubbleEl.hidden = true; }, Math.min(9000, 2600 + text.length * 55));
+  bubbleTimer = setTimeout(() => { bubbleEl.hidden = true; }, Math.min(8500, 2400 + text.length * 50));
 }
 
 function addMessage(who, text) {
@@ -190,9 +209,8 @@ function renderQuick(items) {
   quickEl.innerHTML = "";
   (items || []).forEach((label) => {
     const b = document.createElement("button");
-    b.type = "button";
-    b.textContent = label;
-    b.addEventListener("click", () => { send(label.replace(/[💛🌙]/g, "").trim()); });
+    b.type = "button"; b.textContent = label;
+    b.addEventListener("click", () => send(label.replace(/[💛🎁🌙]/g, "").trim()));
     quickEl.appendChild(b);
   });
 }
@@ -200,38 +218,56 @@ function renderQuick(items) {
 function moodWord(m) {
   return { idle: "around", happy: "happy", love: "smitten", think: "thinking", surprised: "surprised", sad: "soft", sleepy: "sleepy", smug: "smug", shy: "shy" }[m] || "around";
 }
-
 function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
 // ---------------- voice ----------------
 let voices = [];
+const FEMALE_HINTS = ["female", "zira", "hazel", "samantha", "karen", "moira", "tessa", "victoria", "fiona", "susan", "serena", "maria", "anna", "linda", "heather", "emily", "amelie", "joanna", "salli", "kendra", "kimberly", "ivy", "raveena", "catherine", "sonia", "natasha", "aria", "jenny", "michelle", "fiona", "google uk english female", "google us english"];
+const MALE_HINTS = ["male", "david", "mark", "guy", "george", "james", "daniel", "alex", "fred", "tom", "ryan", "oliver", "arthur", "liam", "sean", "brian", "matthew", "christopher", "eric", "paul", "richard", "thomas", "william", "rishi", "yuri", "dmitri", "en-gb-wls", "daniel", "m3", "m4", "m5", "m6", "m7"];
+
+function gender(v) {
+  const n = (v.name + " " + (v.voiceURI || "")).toLowerCase();
+  if (FEMALE_HINTS.some((h) => n.includes(h))) return "f";
+  if (MALE_HINTS.some((h) => n.includes(h))) return "m";
+  return "?";
+}
+
+function pickMaleVoice() {
+  const en = voices.filter((v) => /^en/i.test(v.lang));
+  const pool = en.length ? en : voices;
+  return pool.find((v) => gender(v) === "m") || pool.find((v) => gender(v) !== "f") || pool[0] || voices[0] || null;
+}
+
 function populateVoices() {
   voices = (window.speechSynthesis?.getVoices?.() || []);
   const sel = $("pref-voicepick");
   const wanted = store.pref("voiceURI");
-  sel.innerHTML = '<option value="">auto</option>';
-  voices.forEach((v) => {
+  sel.innerHTML = '<option value="">auto (Blaze picks a guy voice)</option>';
+  const sorted = voices.slice().sort((a, b) => (gender(a) === "m" ? 0 : gender(a) === "f" ? 2 : 1) - (gender(b) === "m" ? 0 : gender(b) === "f" ? 2 : 1));
+  sorted.forEach((v) => {
     const o = document.createElement("option");
-    o.value = v.voiceURI; o.textContent = `${v.name} (${v.lang})`;
+    o.value = v.voiceURI;
+    o.textContent = `${gender(v) === "m" ? "♂" : gender(v) === "f" ? "♀" : "•"} ${v.name} (${v.lang})`;
     if (v.voiceURI === wanted) o.selected = true;
     sel.appendChild(o);
   });
 }
-if (window.speechSynthesis) {
-  populateVoices();
-  speechSynthesis.onvoiceschanged = populateVoices;
-}
+if (window.speechSynthesis) { populateVoices(); speechSynthesis.onvoiceschanged = populateVoices; }
 
 function speak(text) {
   if (!window.speechSynthesis) return;
-  const clean = text.replace(/[😀-🙏🌀-🫿❤️✨🌙💛🧡💕💫🫠]/gu, "").replace(/[#*_`>]/g, "").trim();
+  const clean = text.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, "").replace(/[#*_`>]/g, "").trim();
   if (!clean) return;
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(clean);
     const wanted = store.pref("voiceURI");
-    if (wanted && voices.length) { const v = voices.find((x) => x.voiceURI === wanted); if (v) u.voice = v; }
-    u.rate = 1.02; u.pitch = 1.05; u.volume = 1;
+    let v = wanted ? voices.find((x) => x.voiceURI === wanted) : null;
+    if (!v) v = pickMaleVoice();
+    if (v) u.voice = v;
+    u.rate = 1.0;
+    u.pitch = 0.78;   // pull it down so it sounds like a guy, not a girl
+    u.volume = 1;
     speechSynthesis.speak(u);
   } catch {}
 }
@@ -244,17 +280,16 @@ function toggleMic() {
   if (!SR) { emit({ text: "your browser won't let me listen, moon. typing works just fine 💛", mood: "shy" }); return; }
   if (recognizer) { recognizer.stop(); recognizer = null; btn.classList.remove("listening"); return; }
   recognizer = new SR();
-  recognizer.lang = "en-ZA" in {} ? "en-ZA" : "en-US";
+  recognizer.lang = "en-GB";
   recognizer.interimResults = false;
   recognizer.maxAlternatives = 1;
   btn.classList.add("listening");
   recognizer.onresult = (e) => { const t = e.results[0][0].transcript; btn.classList.remove("listening"); recognizer = null; send(t); };
   recognizer.onerror = () => { btn.classList.remove("listening"); recognizer = null; emit({ text: "i didn't catch that. try again?", mood: "think" }); };
-  recognizer.onend = () => { btn.classList.remove("listening"); };
+  recognizer.onend = () => btn.classList.remove("listening");
   try { recognizer.start(); } catch {}
 }
 
 boot();
 
-// expose for quick manual testing in console
 window.blazeDebug = { respondTo, analyze, store };
