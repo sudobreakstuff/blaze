@@ -12,79 +12,232 @@
 <div class="app">
 
   <div class="scene" id="scene">
-    <div class="wall">
-      <div class="wallpaper"></div>
+    <!-- ===================== THE ROOM (drawn) ===================== -->
+    <svg id="room" class="room" viewBox="0 0 1000 620" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d63a4"/><stop offset="1" stop-color="#5a4480"/></linearGradient>
+        <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c48b5b"/><stop offset="1" stop-color="#7d5233"/></linearGradient>
+        <linearGradient id="wainG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3e8d4"/><stop offset="1" stop-color="#ddcaa9"/></linearGradient>
+        <linearGradient id="trimG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#e3d1b4"/></linearGradient>
+        <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd0ff"/><stop offset="1" stop-color="#d8f1ff"/></linearGradient>
+        <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1633"/><stop offset="1" stop-color="#2b3a6b"/></linearGradient>
+        <radialGradient id="sunG"><stop offset="0" stop-color="#fff8cf"/><stop offset="1" stop-color="#ffce58"/></radialGradient>
+        <radialGradient id="glowG"><stop offset="0" stop-color="#ffe6b0" stop-opacity="0.9"/><stop offset="1" stop-color="#ffe6b0" stop-opacity="0"/></radialGradient>
+        <linearGradient id="screenG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#83e2d6"/><stop offset="1" stop-color="#3d9a8f"/></linearGradient>
+        <linearGradient id="woodG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c68d63"/><stop offset="1" stop-color="#8f6242"/></linearGradient>
+        <linearGradient id="chairG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59a79c"/><stop offset="1" stop-color="#3d7c73"/></linearGradient>
+        <linearGradient id="darkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4152"/><stop offset="1" stop-color="#232936"/></linearGradient>
+        <pattern id="wallpaper" width="64" height="64" patternUnits="userSpaceOnUse">
+          <circle cx="16" cy="16" r="2.6" fill="#ffffff" opacity="0.09"/>
+          <circle cx="48" cy="48" r="2.6" fill="#ffffff" opacity="0.09"/>
+          <path d="M32 24 q7 8 0 16 q-7 -8 0 -16z" fill="#ffffff" opacity="0.05"/>
+        </pattern>
+        <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+      </defs>
 
-      <div class="window" id="window">
-        <div class="sky" id="sky"></div>
-        <div class="cloud c1"></div><div class="cloud c2"></div>
-        <div class="celestial" id="celestial"></div>
-        <div class="stars" id="stars"></div>
-        <div class="frame x"></div><div class="frame y"></div>
-        <div class="sill"><div class="sill-plant"><i></i><i></i><i></i></div></div>
-      </div>
+      <!-- ===== WALL ===== -->
+      <rect x="0" y="0" width="1000" height="432" fill="url(#wallG)"/>
+      <rect x="0" y="0" width="1000" height="432" fill="url(#wallpaper)"/>
+      <rect x="0" y="0" width="1000" height="18" fill="url(#trimG)"/>
+      <rect x="0" y="18" width="1000" height="3" fill="#000" opacity="0.06"/>
 
-      <div class="lights" id="lights"></div>
+      <!-- ===== WAINSCOT ===== -->
+      <rect x="0" y="332" width="1000" height="100" fill="url(#wainG)"/>
+      <g fill="none" stroke="#c9b491" stroke-width="3" opacity="0.75">
+        <rect x="40" y="346" width="120" height="70" rx="4"/><rect x="200" y="346" width="120" height="70" rx="4"/>
+        <rect x="360" y="346" width="120" height="70" rx="4"/><rect x="520" y="346" width="120" height="70" rx="4"/>
+        <rect x="680" y="346" width="120" height="70" rx="4"/><rect x="840" y="346" width="120" height="70" rx="4"/>
+      </g>
+      <rect x="0" y="322" width="1000" height="12" fill="url(#trimG)"/>
+      <rect x="0" y="418" width="1000" height="14" fill="url(#trimG)"/>
 
-      <!-- Your photos go here -->
-      <div class="photowall" id="photowall"></div>
+      <!-- ===== FLOOR ===== -->
+      <rect x="0" y="428" width="1000" height="192" fill="url(#floorG)"/>
+      <g stroke="#00000018" stroke-width="2">
+        <line x1="0" y1="470" x2="1000" y2="470"/><line x1="0" y1="520" x2="1000" y2="520"/>
+        <line x1="0" y1="575" x2="1000" y2="575"/>
+        <line x1="120" y1="428" x2="60" y2="620"/><line x1="300" y1="428" x2="270" y2="620"/>
+        <line x1="480" y1="428" x2="480" y2="620"/><line x1="660" y1="428" x2="690" y2="620"/>
+        <line x1="840" y1="428" x2="910" y2="620"/>
+      </g>
+      <rect x="0" y="428" width="1000" height="12" fill="#000" opacity="0.10"/>
 
-      <div class="shelf">
-        <div class="books"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="jar"></div>
-      </div>
-    </div>
+      <!-- ===== WINDOW ===== -->
+      <g>
+        <rect x="66" y="70" width="292" height="292" rx="8" fill="#f8f0e3"/>
+        <rect x="80" y="84" width="264" height="264" rx="3" fill="url(#skyDay)"/>
+        <rect class="sky-night" x="80" y="84" width="264" height="264" rx="3" fill="url(#skyNight)" opacity="0"/>
+        <g class="stars" opacity="0" fill="#ffffff">
+          <circle cx="110" cy="120" r="2.2"/><circle cx="150" cy="102" r="1.6"/><circle cx="250" cy="118" r="2"/>
+          <circle cx="300" cy="150" r="1.6"/><circle cx="120" cy="200" r="1.6"/><circle cx="280" cy="230" r="2.2"/>
+          <circle cx="200" cy="300" r="1.6"/><circle cx="310" cy="280" r="1.4"/>
+        </g>
+        <g class="sun"><ellipse cx="252" cy="150" rx="30" ry="22" fill="url(#sunG)"/></g>
+        <g class="moon" opacity="0"><ellipse cx="150" cy="140" rx="25" ry="19" fill="#eef3ff"/><ellipse cx="164" cy="132" rx="21" ry="16" fill="url(#skyNight)"/></g>
+        <g class="clouds" fill="#ffffff" opacity="0.92">
+          <ellipse cx="155" cy="135" rx="31" ry="16"/><ellipse cx="186" cy="142" rx="22" ry="13"/>
+          <ellipse cx="285" cy="235" rx="26" ry="13"/>
+        </g>
+        <rect x="206" y="84" width="12" height="264" fill="#f8f0e3"/>
+        <rect x="80" y="210" width="264" height="12" fill="#f8f0e3"/>
+        <path d="M92 92 L154 92 L92 154 Z" fill="#ffffff" opacity="0.16"/>
+      </g>
+      <rect x="50" y="356" width="324" height="16" rx="5" fill="url(#trimG)"/>
+      <!-- windowsill plant -->
+      <g transform="translate(300,318)">
+        <rect x="0" y="24" width="34" height="20" rx="4" fill="#d98f6b"/>
+        <path d="M17 24 q-18 -6 -16 -26 q14 2 16 26z" fill="#5fb56a"/>
+        <path d="M17 24 q18 -8 18 -30 q-16 4 -18 30z" fill="#6bc47a"/>
+        <path d="M17 24 q-4 -22 2 -34 q8 16 -2 34z" fill="#7fd08a"/>
+      </g>
+      <!-- curtains -->
+      <path d="M38 66 q20 90 6 306 l64 0 q-16 -160 -6 -306 z" fill="#c9789c"/>
+      <path d="M386 66 q-20 90 -6 306 l-64 0 q16 -160 6 -306 z" fill="#c9789c"/>
+      <g stroke="#a95d80" stroke-width="3" opacity="0.45" fill="none">
+        <path d="M62 70 q10 150 6 300"/><path d="M362 70 q-10 150 -6 300"/>
+      </g>
 
-    <div class="floor">
-      <div class="rug"></div>
-      <div class="lamp" id="lamp"><div class="shade"></div><div class="glow"></div><div class="pole"></div><div class="base"></div></div>
+      <!-- ===== STRING LIGHTS ===== -->
+      <g>
+        <path d="M0 30 Q 250 62 500 36 T 1000 30" stroke="#efe3d0" stroke-width="2.5" fill="none"/>
+        <g class="bulbs">
+          <circle cx="70" cy="40" r="26" fill="url(#glowG)"/><circle cx="70" cy="40" r="7" fill="#ffd98a"/>
+          <circle cx="230" cy="52" r="26" fill="url(#glowG)"/><circle cx="230" cy="52" r="7" fill="#ffd98a"/>
+          <circle cx="390" cy="48" r="26" fill="url(#glowG)"/><circle cx="390" cy="48" r="7" fill="#ffd98a"/>
+          <circle cx="550" cy="40" r="26" fill="url(#glowG)"/><circle cx="550" cy="40" r="7" fill="#ffd98a"/>
+          <circle cx="710" cy="46" r="26" fill="url(#glowG)"/><circle cx="710" cy="46" r="7" fill="#ffd98a"/>
+          <circle cx="870" cy="52" r="26" fill="url(#glowG)"/><circle cx="870" cy="52" r="7" fill="#ffd98a"/>
+        </g>
+      </g>
 
-      <div class="desk">
-        <div class="monitor"><div class="screen"></div><div class="stand"></div><div class="stand-base"></div></div>
-        <div class="keyboard"></div>
-        <div class="mouse"></div>
-        <div class="desk-mug"></div>
-        <div class="desk-plant"><i></i><i></i><i></i></div>
-        <div class="desk-surface"></div>
-        <div class="desk-leg l"></div><div class="desk-leg r"></div>
-      </div>
+      <!-- ===== BOOKSHELF (right) ===== -->
+      <g>
+        <rect x="726" y="118" width="260" height="312" rx="6" fill="url(#woodG)"/>
+        <rect x="738" y="130" width="236" height="288" fill="#3a2c3f"/>
+        <g fill="#4a3a52"><rect x="738" y="240" width="236" height="10"/><rect x="738" y="352" width="236" height="10"/></g>
+        <!-- top shelf books -->
+        <g>
+          <rect x="748" y="150" width="16" height="80" fill="#e08cae"/><rect x="766" y="160" width="14" height="70" fill="#4fb0a5"/>
+          <rect x="782" y="146" width="18" height="84" fill="#ffb45c"/><rect x="802" y="162" width="13" height="68" fill="#8f7ad0"/>
+          <rect x="817" y="154" width="15" height="76" fill="#e8562a" transform="rotate(7 824 230)"/>
+          <rect x="842" y="150" width="16" height="80" fill="#6bc47a"/><rect x="860" y="158" width="14" height="72" fill="#ffd166"/>
+          <circle cx="905" cy="188" r="20" fill="#7fd0ff"/><circle cx="899" cy="182" r="6" fill="#fff" opacity=".6"/>
+          <rect x="940" y="150" width="20" height="80" rx="3" fill="#e0b878"/>
+        </g>
+        <!-- middle shelf -->
+        <g>
+          <rect x="748" y="264" width="15" height="76" fill="#5fb8e8"/><rect x="765" y="272" width="14" height="68" fill="#ff8fa6"/>
+          <rect x="781" y="260" width="18" height="80" fill="#ffd166"/><rect x="801" y="276" width="13" height="64" fill="#69db7c"/>
+          <rect x="816" y="268" width="15" height="72" fill="#c9789c"/>
+          <rect x="850" y="316" width="30" height="24" rx="3" fill="#efe2cc"/>
+          <path d="M858 316 q-6 -16 6 -22 q4 14 -6 22z" fill="#5fb56a"/>
+          <ellipse cx="912" cy="326" rx="26" ry="14" fill="#cfe8ff" opacity=".7"/>
+          <ellipse cx="912" cy="322" rx="22" ry="10" fill="#a9d6ff"/>
+        </g>
+        <!-- bottom shelf -->
+        <g>
+          <rect x="748" y="376" width="16" height="62" fill="#e8562a"/><rect x="766" y="384" width="14" height="54" fill="#8f7ad0"/>
+          <rect x="782" y="372" width="18" height="66" fill="#4fb0a5"/><rect x="802" y="388" width="13" height="50" fill="#ffb45c"/>
+          <rect x="817" y="380" width="15" height="58" fill="#ff8fa6"/>
+          <rect x="852" y="406" width="60" height="32" rx="4" fill="#3f9c52"/>
+          <ellipse cx="882" cy="404" rx="30" ry="10" fill="#57b56a"/>
+          <circle cx="946" cy="418" r="16" fill="#ffd166"/><circle cx="946" cy="418" r="9" fill="#fff3c4"/>
+        </g>
+      </g>
 
-      <div class="plant"><div class="pot"></div><div class="leaf l1"></div><div class="leaf l2"></div><div class="leaf l3"></div><div class="leaf l4"></div></div>
-      <div class="bed">
-        <div class="headboard"></div>
-        <div class="pillow"></div>
-        <div class="blanket"></div>
-      </div>
-      <div class="cat"><div class="cat-body"></div><div class="cat-head"></div><div class="cat-tail"></div></div>
-    </div>
+      <!-- ===== FLOOR ITEMS ===== -->
+      <!-- rug -->
+      <ellipse cx="450" cy="548" rx="250" ry="76" fill="#b8795a"/>
+      <ellipse cx="450" cy="548" rx="250" ry="76" fill="none" stroke="#8f5a3f" stroke-width="6"/>
+      <ellipse cx="450" cy="548" rx="210" ry="60" fill="#c98a6b"/>
+      <ellipse cx="450" cy="548" rx="150" ry="42" fill="#d99a76"/>
+      <ellipse cx="450" cy="548" rx="90" ry="24" fill="#e6ab86"/>
+
+      <!-- armchair -->
+      <g>
+        <ellipse cx="215" cy="572" rx="150" ry="24" fill="#000" opacity="0.16"/>
+        <rect x="96" y="368" width="240" height="130" rx="30" fill="url(#chairG)"/>
+        <rect x="116" y="392" width="200" height="86" rx="20" fill="#6bbdb1"/>
+        <rect x="84" y="452" width="42" height="112" rx="18" fill="#3d7c73"/>
+        <rect x="306" y="452" width="42" height="112" rx="18" fill="#3d7c73"/>
+        <rect x="120" y="470" width="192" height="64" rx="20" fill="#59a79c"/>
+        <ellipse cx="215" cy="480" rx="70" ry="20" fill="#7fd0c4" opacity="0.7"/>
+      </g>
+
+      <!-- floor lamp -->
+      <g>
+        <circle cx="392" cy="352" r="70" fill="url(#glowG)"/>
+        <rect x="386" y="356" width="10" height="196" fill="#4b4157"/>
+        <ellipse cx="391" cy="556" rx="34" ry="9" fill="#3f3651"/>
+        <path d="M356 356 L426 356 L410 318 L372 318 Z" fill="#f4c07a"/>
+        <path d="M356 356 L426 356 L410 318 L372 318 Z" fill="none" stroke="#e0a75f" stroke-width="2"/>
+      </g>
+
+      <!-- tall plant (far left) -->
+      <g transform="translate(20,300)">
+        <path d="M40 150 q-34 -10 -30 -48 q28 4 30 48z" fill="#3f9c52"/>
+        <path d="M40 150 q34 -14 34 -58 q-32 6 -34 58z" fill="#4fb06a"/>
+        <path d="M40 150 q-6 -44 4 -70 q14 30 -4 70z" fill="#6bc47a"/>
+        <path d="M40 150 q-24 -26 -18 -60 q22 18 18 60z" fill="#57b56a"/>
+        <path d="M40 150 q26 -30 22 -64 q-24 22 -22 64z" fill="#6bc47a"/>
+        <path d="M8 150 h64 l-8 62 q-24 8 -48 0 z" fill="#d98f6b"/>
+        <rect x="4" y="146" width="72" height="12" rx="4" fill="#c47a56"/>
+      </g>
+
+      <!-- cat on rug -->
+      <g transform="translate(592,520)">
+        <ellipse cx="30" cy="26" rx="34" ry="18" fill="#f5d9a8"/>
+        <path d="M10 16 q-12 -4 -16 8" stroke="#e0b878" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <circle cx="6" cy="12" r="14" fill="#f0cf98"/>
+        <path d="M-4 4 l-2 -12 l12 6z" fill="#f0cf98"/><path d="M14 2 l10 -8 l-2 12z" fill="#f0cf98"/>
+        <circle cx="2" cy="12" r="2.2" fill="#3a2a1a"/><circle cx="11" cy="12" r="2.2" fill="#3a2a1a"/>
+        <path d="M6 18 q3 3 6 0" stroke="#3a2a1a" stroke-width="1.6" fill="none"/>
+      </g>
+
+      <!-- desk (front right) -->
+      <g>
+        <rect x="700" y="470" width="280" height="16" rx="6" fill="url(#woodG)"/>
+        <rect x="712" y="486" width="14" height="110" fill="#8f6242"/>
+        <rect x="954" y="486" width="14" height="110" fill="#8f6242"/>
+        <!-- monitor -->
+        <rect x="795" y="366" width="150" height="100" rx="10" fill="url(#darkG)"/>
+        <rect x="803" y="374" width="134" height="84" rx="5" fill="url(#screenG)"/>
+        <path d="M812 382 h40 v24 h-40z" fill="#ffffff" opacity="0.22"/>
+        <rect x="862" y="466" width="16" height="12" fill="#232936"/>
+        <rect x="842" y="476" width="56" height="8" rx="4" fill="#232936"/>
+        <!-- keyboard -->
+        <rect x="742" y="452" width="120" height="16" rx="4" fill="#e9e3d8"/>
+        <rect x="748" y="456" width="108" height="8" rx="2" fill="#b9b2a5" opacity="0.7"/>
+        <!-- mug -->
+        <rect x="884" y="446" width="20" height="24" rx="4" fill="#e08cae"/>
+        <path d="M904 452 h8 a8 8 0 0 1 0 14 h-8" fill="none" stroke="#e08cae" stroke-width="4"/>
+        <!-- desk plant -->
+        <g transform="translate(706,414)">
+          <path d="M12 32 q-12 -6 -10 -22 q10 2 10 22z" fill="#5fb56a"/>
+          <path d="M12 32 q12 -6 12 -24 q-12 4 -12 24z" fill="#6bc47a"/>
+          <path d="M12 32 q-2 -18 2 -28 q6 14 -2 28z" fill="#7fd08a"/>
+          <rect x="0" y="32" width="24" height="18" rx="3" fill="#d98f6b"/>
+        </g>
+      </g>
+
+      <!-- night tint -->
+      <rect class="night-tint" x="0" y="0" width="1000" height="620" fill="#0c1030" opacity="0"/>
+    </svg>
+
+    <!-- your photos, pinned on the wall -->
+    <div class="photowall" id="photowall"></div>
 
     <!-- ============ BLAZE ============ -->
     <svg id="blaze" class="blaze mood-idle" viewBox="0 0 220 330" xmlns="http://www.w3.org/2000/svg" aria-label="Blaze">
       <defs>
-        <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ff9a4a"/><stop offset="0.55" stop-color="#f2701f"/><stop offset="1" stop-color="#c94a12"/>
-        </linearGradient>
-        <linearGradient id="hairhi" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#ffd79a"/><stop offset="1" stop-color="#ffab5c"/>
-        </linearGradient>
-        <linearGradient id="iris" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffd98a"/><stop offset="0.5" stop-color="#ff9d3c"/><stop offset="1" stop-color="#b8430f"/>
-        </linearGradient>
-        <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffe3cd"/><stop offset="1" stop-color="#f6c3a3"/>
-        </linearGradient>
-        <linearGradient id="jacket" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3f6f7d"/><stop offset="1" stop-color="#2c4f5c"/>
-        </linearGradient>
-        <linearGradient id="tee" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fffaf3"/><stop offset="1" stop-color="#eaddcb"/>
-        </linearGradient>
-        <linearGradient id="jeans" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3c4a70"/><stop offset="1" stop-color="#28324f"/>
-        </linearGradient>
-        <radialGradient id="blush" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stop-color="#ff8fa6" stop-opacity="0.9"/><stop offset="1" stop-color="#ff8fa6" stop-opacity="0"/>
-        </radialGradient>
+        <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a4a"/><stop offset="0.55" stop-color="#f2701f"/><stop offset="1" stop-color="#c94a12"/></linearGradient>
+        <linearGradient id="hairhi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd79a"/><stop offset="1" stop-color="#ffab5c"/></linearGradient>
+        <linearGradient id="iris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd98a"/><stop offset="0.5" stop-color="#ff9d3c"/><stop offset="1" stop-color="#b8430f"/></linearGradient>
+        <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe3cd"/><stop offset="1" stop-color="#f6c3a3"/></linearGradient>
+        <linearGradient id="jacket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f6f7d"/><stop offset="1" stop-color="#2c4f5c"/></linearGradient>
+        <linearGradient id="tee" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf3"/><stop offset="1" stop-color="#eaddcb"/></linearGradient>
+        <linearGradient id="jeans" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c4a70"/><stop offset="1" stop-color="#28324f"/></linearGradient>
+        <radialGradient id="blush" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ff8fa6" stop-opacity="0.9"/><stop offset="1" stop-color="#ff8fa6" stop-opacity="0"/></radialGradient>
       </defs>
 
       <ellipse id="shadow" cx="110" cy="316" rx="44" ry="8" fill="#1a1020" opacity="0.22"/>
@@ -134,25 +287,20 @@
         <path d="M100 110 h20 v18 q-10 6 -20 0 z" fill="#e9b491"/>
         <g id="head">
           <path d="M68 76 q0 -42 42 -42 q42 0 42 42 q0 32 -9 50 q-9 -16 -8 -36 q-28 8 -58 0 q1 20 -8 36 q-9 -18 -9 -50 z" fill="url(#hair)"/>
-
           <path d="M110 34 q40 0 40 44 q0 40 -40 56 q-40 -16 -40 -56 q0 -44 40 -44 z" fill="url(#skin)"/>
           <path d="M110 34 q40 0 40 44 q0 8 -2 16 q-12 -18 -38 -18 q-26 0 -38 18 q-2 -8 -2 -16 q0 -44 40 -44 z" fill="#f3c3a2" opacity="0.5"/>
           <ellipse cx="66" cy="84" rx="6.5" ry="9" fill="#f6c3a3"/>
           <ellipse cx="154" cy="84" rx="6.5" ry="9" fill="#f6c3a3"/>
-
           <ellipse id="blush-l" cx="83" cy="101" rx="12" ry="7.5" fill="url(#blush)"/>
           <ellipse id="blush-r" cx="137" cy="101" rx="12" ry="7.5" fill="url(#blush)"/>
-
           <path d="M69 74 q2 -38 41 -38 q39 0 41 38 q-9 -16 -22 -21 q-6 15 -16 19 q-3 -15 -9 -21 q-18 6 -35 23 z" fill="url(#hair)"/>
           <path d="M93 37 q20 -7 36 6 q-16 -5 -31 3 q-5 3 -5 -9 z" fill="url(#hairhi)" opacity="0.85"/>
           <path d="M86 42 q10 8 14 22" stroke="#ffbe78" stroke-width="2.5" fill="none" opacity="0.7" stroke-linecap="round"/>
           <path d="M130 40 q-6 12 -4 24" stroke="#c94a12" stroke-width="2" fill="none" opacity="0.5" stroke-linecap="round"/>
-
           <g id="brows">
             <rect class="brow" id="brow-l" x="85" y="68" width="21" height="4.5" rx="2.2" fill="#a63c0d"/>
             <rect class="brow" id="brow-r" x="114" y="68" width="21" height="4.5" rx="2.2" fill="#a63c0d"/>
           </g>
-
           <g class="eyes eyes-normal">
             <g class="eye" id="eye-l">
               <ellipse cx="94" cy="85" rx="11.5" ry="13.5" fill="#fdfcff"/>
@@ -173,7 +321,6 @@
               <rect class="lid" id="lid-r" x="114" y="70" width="25" height="30" fill="url(#skin)"/>
             </g>
           </g>
-
           <g class="eyes eyes-happy">
             <path d="M83 88 q11 -13 22 0" stroke="#33170a" stroke-width="4.2" fill="none" stroke-linecap="round"/>
             <path d="M115 88 q11 -13 22 0" stroke="#33170a" stroke-width="4.2" fill="none" stroke-linecap="round"/>
@@ -198,7 +345,6 @@
             <circle cx="91" cy="86" r="2.3" fill="#fff" opacity="0.9"/>
             <circle cx="123" cy="86" r="2.3" fill="#fff" opacity="0.9"/>
           </g>
-
           <g id="mouths">
             <path class="mouth mouth-idle" d="M104 107 q6 5 12 0" stroke="#9c4522" stroke-width="3" fill="none" stroke-linecap="round"/>
             <path class="mouth mouth-smile" d="M100 105 q10 12 20 0" stroke="#9c4522" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -208,13 +354,11 @@
             <path class="mouth mouth-smirk" d="M101 107 q11 9 21 3" stroke="#9c4522" stroke-width="3" fill="none" stroke-linecap="round"/>
           </g>
         </g>
-
         <g id="prop" class="prop"></g>
       </g>
     </svg>
 
     <div class="hearts" id="hearts"></div>
-
     <div class="drop-hint" id="drop-hint">drop photos anywhere to pin them on the wall 📷</div>
 
     <div class="bubble" id="bubble" hidden>
@@ -235,12 +379,12 @@
         </div>
       </div>
       <div class="head-btns">
+        <button class="icon-btn" id="btn-gallery" title="our photo wall">📷</button>
         <button class="icon-btn" id="btn-settings" title="settings">⚙</button>
       </div>
     </header>
 
     <div class="messages" id="messages"></div>
-
     <div class="quick" id="quick"></div>
 
     <form class="composer" id="composer" autocomplete="off">
@@ -268,9 +412,7 @@
 
       <div class="row"><span>🗣️ Voice pick</span><select id="pref-voicepick"></select></div>
       <div class="row"><span>voice tone</span>
-        <span class="mini-actions">
-          <button class="icon-btn" id="btn-test-voice" title="hear it">▶</button>
-        </span>
+        <span class="mini-actions"><button class="icon-btn" id="btn-test-voice" title="hear it">▶</button></span>
       </div>
       <label class="row slider"><span>🎚️ Pitch</span>
         <input type="range" id="pref-pitch" min="0.5" max="1.4" step="0.02" value="0.9">
@@ -281,8 +423,8 @@
 
       <div class="row"><span>📷 Wall photos</span>
         <span class="mini-actions">
-          <button class="icon-btn" id="btn-add-photos" title="add photos">＋ add</button>
-          <button class="icon-btn" id="btn-clear-photos" title="remove all">clear</button>
+          <button class="icon-btn" id="btn-add-photos">＋ add</button>
+          <button class="icon-btn" id="btn-open-gallery">manage</button>
         </span>
       </div>
       <div class="photo-hint">your photos stay on this device — Blaze never uploads them anywhere.</div>

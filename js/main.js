@@ -85,9 +85,11 @@ function boot() {
   // photos
   $("btn-add-photos").addEventListener("click", () => $("photo-input").click());
   $("photo-input").addEventListener("change", async (e) => { await photos.addFiles(e.target.files); e.target.value = ""; });
-  $("btn-clear-photos").addEventListener("click", () => { if (photos.count() && confirm("Remove all your wall photos?")) photos.clear(); });
+  $("btn-gallery").addEventListener("click", () => photos.openGallery());
+  $("btn-open-gallery").addEventListener("click", () => { $("settings").hidden = true; photos.openGallery(); });
   $("photowall").addEventListener("click", () => { if (photos.count() === 0) $("photo-input").click(); });
   setupDropZone();
+  $("blaze").addEventListener("click", petBlaze);
 
   ["voice", "mic", "notify", "effects"].forEach((k) => {
     $("pref-" + k).addEventListener("change", async (e) => {
@@ -115,6 +117,29 @@ function boot() {
 function makeLights() {
   const el = $("lights"); if (!el) return;
   for (let i = 0; i < 12; i++) { const s = document.createElement("i"); s.style.left = (3 + i * 8.4) + "%"; el.appendChild(s); }
+}
+
+let lastPet = 0;
+function petBlaze() {
+  const now = Date.now();
+  if (now - lastPet < 900) return;
+  lastPet = now;
+  brain.touch();
+  store.addAffection(1);
+  blaze.react("hug");
+  blaze.setMood("love", 2600);
+  blaze.spawnHearts(6);
+  if (FAST || Math.random() < 0.5) {
+    emit({ text: pick([
+      "hehe. okay. i like that.",
+      "careful, i get attached.",
+      "oh! more. i mean — that's enough. (more.)",
+      "you can't just poke me and expect me to be normal about it.",
+      "fine. i'm yours. you already knew that.",
+      "that's the spot, moon 🌙",
+      "warn me next time. i'm fragile and extremely fond of you.",
+    ]), mood: "love", hearts: true, action: "bounce" });
+  }
 }
 
 let dragDepth = 0;
