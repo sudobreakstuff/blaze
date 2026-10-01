@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>blaze 🌙</title>
+<meta name="description" content="a little someone who thinks about you." />
+<link rel="icon" href="assets/favicon.svg" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="day">
+<div class="app">
+
+  <div class="scene" id="scene">
+    <div class="wall">
+      <div class="window" id="window">
+        <div class="sky" id="sky"></div>
+        <div class="sun" id="celestial"></div>
+        <div class="stars" id="stars"></div>
+        <div class="curtain left"></div>
+        <div class="curtain right"></div>
+        <div class="sill"></div>
+      </div>
+      <div class="shelf"></div>
+      <div class="lamp" id="lamp"><div class="shade"></div><div class="glow"></div></div>
+    </div>
+
+    <div class="floor">
+      <div class="rug"></div>
+      <div class="plant"><div class="pot"></div><div class="leaf l1"></div><div class="leaf l2"></div><div class="leaf l3"></div></div>
+      <div class="bed"><div class="pillow"></div><div class="blanket"></div></div>
+    </div>
+
+    <!-- ============ BLAZE ============ -->
+    <svg id="blaze" class="blaze mood-idle" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg" aria-label="Blaze">
+      <defs>
+        <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#e8541f"/>
+        </linearGradient>
+        <linearGradient id="hairhi" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#ff9d4d"/>
+        </linearGradient>
+        <linearGradient id="iris" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffd98a"/><stop offset="0.55" stop-color="#ff9d3c"/><stop offset="1" stop-color="#c94f14"/>
+        </linearGradient>
+        <linearGradient id="hoodie" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffd9c2"/><stop offset="1" stop-color="#f2b591"/>
+        </linearGradient>
+        <linearGradient id="jeans" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4a5a86"/><stop offset="1" stop-color="#333f63"/>
+        </linearGradient>
+        <radialGradient id="blush" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ff8fa6" stop-opacity="0.85"/><stop offset="1" stop-color="#ff8fa6" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- shadow -->
+      <ellipse id="shadow" cx="110" cy="306" rx="46" ry="9" fill="#000" opacity="0.16"/>
+
+      <g id="blaze-root">
+        <!-- ===== legs ===== -->
+        <g class="leg leg-l" id="leg-l">
+          <rect x="84" y="210" width="20" height="60" rx="9" fill="url(#jeans)"/>
+          <rect x="86" y="208" width="10" height="26" rx="4" fill="#5a6b99" opacity="0.6"/>
+          <path d="M80 272 h30 a6 6 0 0 1 6 6 v6 h-42 v-6 a6 6 0 0 1 6-6 z" fill="#f6f2ea"/>
+          <path d="M80 272 h30 a6 6 0 0 1 6 6 v2 h-42 v-2 a6 6 0 0 1 6-6 z" fill="#e0542a"/>
+          <rect x="76" y="286" width="46" height="6" rx="3" fill="#2b2b33"/>
+        </g>
+        <g class="leg leg-r" id="leg-r">
+          <rect x="116" y="210" width="20" height="60" rx="9" fill="url(#jeans)"/>
+          <rect x="118" y="208" width="10" height="26" rx="4" fill="#5a6b99" opacity="0.6"/>
+          <path d="M114 272 h30 a6 6 0 0 1 6 6 v6 h-42 v-6 a6 6 0 0 1 6-6 z" fill="#f6f2ea"/>
+          <path d="M114 272 h30 a6 6 0 0 1 6 6 v2 h-42 v-2 a6 6 0 0 1 6-6 z" fill="#e0542a"/>
+          <rect x="110" y="286" width="46" height="6" rx="3" fill="#2b2b33"/>
+        </g>
+
+        <!-- ===== torso ===== -->
+        <g id="torso">
+          <path d="M74 128 q36 -14 72 0 l8 78 q-44 12 -88 0 z" fill="url(#hoodie)"/>
+          <path d="M74 128 q36 -14 72 0 l3 26 q-39 -8 -78 0 z" fill="#ffffff" opacity="0.35"/>
+          <path d="M96 130 q14 26 28 0 l0 8 q-14 16 -28 0 z" fill="#e8541f" opacity="0.85"/>
+          <!-- jacket -->
+          <path d="M74 132 q-10 4 -12 16 l6 54 q10 6 20 8 l2 -70 z" fill="#ffe9dc"/>
+          <path d="M146 132 q10 4 12 16 l-6 54 q-10 6 -20 8 l-2 -70 z" fill="#ffe9dc"/>
+          <line x1="92" y1="140" x2="92" y2="204" stroke="#e3b79c" stroke-width="2"/>
+          <line x1="128" y1="140" x2="128" y2="204" stroke="#e3b79c" stroke-width="2"/>
+          <!-- drawstrings -->
+          <path d="M100 132 q4 20 -2 34" stroke="#e8541f" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M120 132 q-4 20 2 34" stroke="#e8541f" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- ===== arms ===== -->
+        <g class="arm" id="arm-l">
+          <rect x="52" y="138" width="22" height="66" rx="11" fill="#ffe9dc"/>
+          <rect x="52" y="138" width="22" height="22" rx="11" fill="url(#hoodie)"/>
+          <circle cx="63" cy="208" r="13" fill="#ffd9c0"/>
+        </g>
+        <g class="arm" id="arm-r">
+          <rect x="146" y="138" width="22" height="66" rx="11" fill="#ffe9dc"/>
+          <rect x="146" y="138" width="22" height="22" rx="11" fill="url(#hoodie)"/>
+          <circle cx="157" cy="208" r="13" fill="#ffd9c0"/>
+        </g>
+
+        <!-- ===== neck + head ===== -->
+        <rect x="100" y="116" width="20" height="18" rx="8" fill="#f1b696"/>
+        <g id="head">
+          <!-- back hair -->
+          <path d="M66 78 q0 -44 44 -44 q44 0 44 44 q0 34 -10 52 q-8 -20 -6 -40 q-30 8 -56 0 q2 20 -6 40 q-10 -18 -10 -52 z" fill="url(#hair)"/>
+          <!-- ears -->
+          <ellipse cx="66" cy="86" rx="7" ry="10" fill="#f1b696"/>
+          <ellipse cx="154" cy="86" rx="7" ry="10" fill="#f1b696"/>
+          <!-- face -->
+          <path d="M110 40 q40 0 40 44 q0 40 -40 56 q-40 -16 -40 -56 q0 -44 40 -44 z" fill="#ffdcc4"/>
+          <!-- cheeks blush -->
+          <ellipse id="blush-l" cx="84" cy="102" rx="12" ry="8" fill="url(#blush)"/>
+          <ellipse id="blush-r" cx="136" cy="102" rx="12" ry="8" fill="url(#blush)"/>
+          <!-- bangs -->
+          <path d="M70 74 q2 -38 40 -38 q38 0 40 38 q-12 -16 -28 -20 q-8 14 -18 18 q-4 -14 -10 -20 q-14 8 -24 22 z" fill="url(#hair)"/>
+          <path d="M96 40 q18 -8 34 4 q-16 -4 -30 4 q-4 2 -4 -8z" fill="url(#hairhi)" opacity="0.9"/>
+          <!-- brows -->
+          <g id="brows">
+            <rect class="brow" id="brow-l" x="86" y="70" width="20" height="4.5" rx="2.2" fill="#b8430f"/>
+            <rect class="brow" id="brow-r" x="114" y="70" width="20" height="4.5" rx="2.2" fill="#b8430f"/>
+          </g>
+
+          <!-- eyes: normal -->
+          <g class="eyes eyes-normal">
+            <g class="eye" id="eye-l">
+              <ellipse cx="94" cy="86" rx="11" ry="13" fill="#fbfbff"/>
+              <ellipse class="iris" cx="94" cy="87" rx="9" ry="11" fill="url(#iris)"/>
+              <ellipse class="pupil" cx="94" cy="88" rx="4.6" ry="6" fill="#3a1a06"/>
+              <circle cx="90.5" cy="82" r="3.2" fill="#fff"/>
+              <circle cx="97" cy="93" r="1.6" fill="#fff" opacity="0.85"/>
+              <rect class="lid" id="lid-l" x="82" y="72" width="24" height="28" fill="#ffdcc4"/>
+            </g>
+            <g class="eye" id="eye-r">
+              <ellipse cx="126" cy="86" rx="11" ry="13" fill="#fbfbff"/>
+              <ellipse class="iris" cx="126" cy="87" rx="9" ry="11" fill="url(#iris)"/>
+              <ellipse class="pupil" cx="126" cy="88" rx="4.6" ry="6" fill="#3a1a06"/>
+              <circle cx="122.5" cy="82" r="3.2" fill="#fff"/>
+              <circle cx="129" cy="93" r="1.6" fill="#fff" opacity="0.85"/>
+              <rect class="lid" id="lid-r" x="114" y="72" width="24" height="28" fill="#ffdcc4"/>
+            </g>
+          </g>
+
+          <!-- eyes: happy (^ ^) -->
+          <g class="eyes eyes-happy">
+            <path d="M84 88 q10 -12 20 0" stroke="#3a1a06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M116 88 q10 -12 20 0" stroke="#3a1a06" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- eyes: love (hearts) -->
+          <g class="eyes eyes-love">
+            <path d="M94 96 C82 86 84 74 94 80 C104 74 106 86 94 96 Z" fill="#ff5c8a"/>
+            <path d="M126 96 C114 86 116 74 126 80 C136 74 138 86 126 96 Z" fill="#ff5c8a"/>
+          </g>
+          <!-- eyes: closed (／＼) -->
+          <g class="eyes eyes-closed">
+            <path d="M83 86 q11 10 22 0" stroke="#3a1a06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M115 86 q11 10 22 0" stroke="#3a1a06" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- eyes: sad -->
+          <g class="eyes eyes-sad">
+            <ellipse cx="94" cy="90" rx="9" ry="10" fill="#fbfbff"/>
+            <ellipse cx="126" cy="90" rx="9" ry="10" fill="#fbfbff"/>
+            <ellipse cx="94" cy="91" rx="7" ry="8" fill="#6b7fa6"/>
+            <ellipse cx="126" cy="91" rx="7" ry="8" fill="#6b7fa6"/>
+            <ellipse cx="94" cy="91" rx="3.4" ry="4.6" fill="#22344f"/>
+            <ellipse cx="126" cy="91" rx="3.4" ry="4.6" fill="#22344f"/>
+          </g>
+
+          <!-- mouths -->
+          <g id="mouths">
+            <path class="mouth mouth-idle" d="M104 108 q6 5 12 0" stroke="#8a3b1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mouth mouth-smile" d="M100 106 q10 12 20 0" stroke="#8a3b1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mouth mouth-grin" d="M98 106 q12 16 24 0 q-12 6 -24 0 z" fill="#b8471f"/>
+            <ellipse class="mouth mouth-o" cx="110" cy="112" rx="6" ry="8" fill="#8a3b1e"/>
+            <path class="mouth mouth-sad" d="M102 114 q8 -6 16 0" stroke="#8a3b1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mouth mouth-smirk" d="M102 108 q10 8 20 2" stroke="#8a3b1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <!-- held item (appears for some actions) -->
+        <g id="prop" class="prop"></g>
+      </g>
+    </svg>
+
+    <div class="hearts" id="hearts"></div>
+
+    <div class="bubble" id="bubble" hidden>
+      <div class="bubble-text" id="bubble-text"></div>
+      <div class="bubble-tail"></div>
+    </div>
+
+    <div class="nameplate"><span id="blaze-name">Blaze</span> <span class="moodlabel" id="mood-label">is around</span></div>
+  </div>
+
+  <aside class="chat" id="chat">
+    <header class="chat-head">
+      <div class="who">
+        <span class="dot" id="status-dot"></span>
+        <div>
+          <strong>Blaze</strong>
+          <small id="chat-sub">thinking about you</small>
+        </div>
+      </div>
+      <div class="head-btns">
+        <button class="icon-btn" id="btn-settings" title="settings">⚙</button>
+      </div>
+    </header>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="quick" id="quick"></div>
+
+    <form class="composer" id="composer" autocomplete="off">
+      <button type="button" class="icon-btn mic" id="btn-mic" title="talk to Blaze">🎤</button>
+      <input id="input" type="text" placeholder="say something to Blaze…" maxlength="400" />
+      <button type="submit" class="send" id="btn-send" title="send">➤</button>
+    </form>
+  </aside>
+
+  <div class="settings" id="settings" hidden>
+    <div class="settings-card">
+      <h2>how Blaze behaves</h2>
+      <label class="row"><span>🔊 Voice</span><input type="checkbox" id="pref-voice" checked></label>
+      <label class="row"><span>🎙️ Let Blaze listen (mic)</span><input type="checkbox" id="pref-mic"></label>
+      <label class="row"><span>🔔 Nudge me with notifications</span><input type="checkbox" id="pref-notify"></label>
+      <label class="row"><span>✨ Effects</span><input type="checkbox" id="pref-effects" checked></label>
+      <label class="row slider"><span>💗 Spice level</span>
+        <input type="range" id="pref-spice" min="0" max="2" step="1" value="1">
+      </label>
+      <div class="spice-legend"><span>sweet</span><span>flirty</span><span>extra</span></div>
+      <label class="row"><span>🗣️ Voice pick</span><select id="pref-voicepick"></select></label>
+      <div class="row memory">
+        <span>🧠 Blaze remembers <b id="fact-count">0</b> things</span>
+        <button class="icon-btn" id="btn-forget" title="forget everything">forget</button>
+      </div>
+      <button class="primary" id="btn-close-settings">done</button>
+    </div>
+  </div>
+
+  <div class="debug" id="debug" hidden></div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

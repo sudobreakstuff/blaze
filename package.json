@@ -1,0 +1,13 @@
+{
+  "name": "blaze",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Blaze — a little autonomous companion who lives in a web page and thinks about Jasmine.",
+  "scripts": {
+    "serve": "python3 -m http.server 8765",
+    "content": "node tools/count-content.mjs",
+    "test": "node tools/nlp-selftest.mjs",
+    "check": "npm run content && npm run test"
+  }
+}
