@@ -17,9 +17,14 @@ Pages.
 - **Surprises**: he sends her to 40+ nice corners of the internet (Radio Garden,
   WindowSwap, Rainy Mood, Poolside FM, GeoGuessr…) and makes her little things —
   hand-drawn doodles, poems, coupons and fortunes — as tappable cards
-- **A photo wall**: add your own photos in ⚙ settings (or drag-and-drop them onto
-  the room) and they pin up on Blaze's wall. Photos are downscaled and stored
-  *only on that device* — nothing is ever uploaded
+- **A photo wall + gallery**: add your own photos in ⚙ settings (or drag-and-drop
+  them onto the room) and they pin up big on Blaze's wall. Every photo has an
+  always-visible **×** to remove, click one for a full-size **lightbox** with
+  next/prev, **captions** and delete, and the 📷 button opens the whole **gallery**.
+  Photos are downscaled and stored *only on that device* — nothing is ever uploaded
+- The room is a hand-drawn scene (window, curtains, bookshelf, desk, armchair,
+  rug, lamp, plants, a cat) that turns to night with the clock, and you can
+  **pet Blaze** by tapping him
 - Offline browser voice: he can speak and listen (Web Speech API). He scores the
   available voices, auto-picks the most natural **male** one, and speaks sentence
   by sentence with natural pauses. Pitch, speed, voice and a "test voice" button
