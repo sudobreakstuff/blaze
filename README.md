@@ -33,6 +33,12 @@ Pages.
   by sentence with natural pauses. Pitch, speed, voice and a "test voice" button
   are all in settings
 
+## Use it on Windows (for Jasmine)
+
+Nothing to install — just open **https://sudobreakstuff.github.io/blaze/** in
+Edge or Chrome. Full step-by-step (install as an app, pin to taskbar, voices,
+photos) is in [`docs/WINDOWS.md`](docs/WINDOWS.md).
+
 ## Run it locally
 
 ```bash

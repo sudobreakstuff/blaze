@@ -124,7 +124,7 @@ function maybeVoiceHint() {
   setTimeout(() => {
     if (store.pref("voiceHintShown", false) || !store.pref("voice", true)) return;
     const v = pickBestVoice();
-    const poor = !v || /espeak|compact|robot/i.test(v.name) || v.localService !== false;
+    const poor = !v || /espeak|compact|robot/i.test(v.name);
     if (poor) {
       store.setPref("voiceHintShown", true);
       emit({ text: "psst — if my voice sounds robotic, that's the browser's fault, not mine. ⚙ → voice has a link to install a proper one.", mood: "shy" });
@@ -323,9 +323,9 @@ const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
 // ---------------- voice ----------------
 let voices = [];
-const FEMALE_HINTS = ["female", "zira", "hazel", "samantha", "karen", "moira", "tessa", "victoria", "fiona", "susan", "serena", "maria", "anna", "linda", "heather", "emily", "amelie", "joanna", "salli", "kendra", "kimberly", "ivy", "raveena", "catherine", "sonia", "natasha", "aria", "jenny", "michelle", "google uk english female", "google us english"];
-const MALE_HINTS = ["male", "david", "mark", "guy", "george", "james", "daniel", "alex", "fred", "tom", "ryan", "oliver", "arthur", "liam", "sean", "brian", "matthew", "christopher", "eric", "paul", "richard", "thomas", "william", "rishi", "yuri", "dmitri", "en-gb-wls", "m3", "m4", "m5", "m6", "m7"];
-const QUALITY = [["natural", 60], ["neural", 60], ["piper", 55], ["wavenet", 45], ["google", 40], ["online", 36], ["siri", 32], ["cloud", 30], ["premium", 28], ["enhanced", 28], ["multilingual", 20], ["compact", -22], ["espeak", -26], ["robot", -20]];
+const FEMALE_HINTS = ["female", "zira", "hazel", "samantha", "karen", "moira", "tessa", "victoria", "fiona", "susan", "serena", "maria", "anna", "linda", "heather", "emily", "amelie", "joanna", "salli", "kendra", "kimberly", "ivy", "raveena", "catherine", "sonia", "natasha", "aria", "jenny", "michelle", "ava", "emma", "ana", "clara", "elizabeth", "luna", "olivia", "amber", "ashley", "cora", "monica", "catalina", "sara", "hanna", "google uk english female", "google us english"];
+const MALE_HINTS = ["male", "david", "mark", "guy", "george", "james", "daniel", "alex", "fred", "tom", "ryan", "oliver", "arthur", "liam", "sean", "brian", "matthew", "christopher", "eric", "paul", "richard", "thomas", "william", "rishi", "yuri", "dmitri", "andrew", "roger", "steffan", "jason", "connor", "kevin", "brandon", "en-gb-wls", "m3", "m4", "m5", "m6", "m7"];
+const QUALITY = [["online (natural)", 85], ["natural", 60], ["neural", 60], ["piper", 55], ["wavenet", 45], ["google", 40], ["online", 36], ["siri", 32], ["cloud", 30], ["premium", 28], ["enhanced", 28], ["multilingual", 20], ["microsoft", 12], ["compact", -22], ["espeak", -26], ["robot", -20]];
 
 function gender(v) {
   const n = (v.name + " " + (v.voiceURI || "")).toLowerCase();
@@ -416,5 +416,9 @@ function toggleMic() {
 }
 
 boot();
+
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+}
 
 window.blazeDebug = { respondTo, analyze, store, photos };
