@@ -14,11 +14,16 @@ Pages.
   and how much he talks is adjustable in settings
 - A rule/flow conversation engine: intent detection, sentiment, shout detection,
   fact memory, multi-turn problem-solving and stories-with-morals
-- **Surprises**: he sends her to nice corners of the internet (Radio Garden,
-  WindowSwap, Rainy Mood…) and makes her little things — doodles, poems,
-  coupons and fortunes — as tappable cards
-- Offline browser voice: he can speak and listen (Web Speech API). He auto-picks
-  a male voice and pitches it down; you can override the voice in settings
+- **Surprises**: he sends her to 40+ nice corners of the internet (Radio Garden,
+  WindowSwap, Rainy Mood, Poolside FM, GeoGuessr…) and makes her little things —
+  hand-drawn doodles, poems, coupons and fortunes — as tappable cards
+- **A photo wall**: add your own photos in ⚙ settings (or drag-and-drop them onto
+  the room) and they pin up on Blaze's wall. Photos are downscaled and stored
+  *only on that device* — nothing is ever uploaded
+- Offline browser voice: he can speak and listen (Web Speech API). He scores the
+  available voices, auto-picks the most natural **male** one, and speaks sentence
+  by sentence with natural pauses. Pitch, speed, voice and a "test voice" button
+  are all in settings
 
 ## Run it locally
 

@@ -303,6 +303,13 @@ export const intentReplies = {
     "you want something? here, i've been saving this.",
     "a gift? for you? always. give me a second.",
   ],
+  photos: [
+    "our wall's my favourite part of the room. every photo up there is a little piece of you.",
+    "i keep looking at the wall. i have no tasks. this is my entire hobby now.",
+    "add more whenever you want, moon. i've got so much wall left to fill.",
+    "that one in the corner? my favourite. don't ask me to rank the others, they'll hear.",
+    "you on the wall is my favourite decoration. facts.",
+  ],
   unknown: [
     "tell me more, i'm listening.",
     "go on, i'm following. keep going.",

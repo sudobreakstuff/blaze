@@ -76,6 +76,7 @@ export const INTENTS = {
   ask_name:      { kw: ["name"], ph: ["your name", "whats your name", "what is your name", "who are you", "what are you", "whats your name?", "are you blaze"] },
   abilities:     { kw: ["abilities", "capable"], ph: ["what can you do", "what do you do", "what are you for", "what are you good at"] },
   surprise:      { kw: ["surprise", "gift", "present"], ph: ["surprise me", "give me a gift", "send me something", "show me something", "make me something", "take me somewhere", "send me a link", "something to do", "i'm bored, entertain me"] },
+  photos:        { kw: ["photo", "photos", "picture", "pictures", "pic", "pics", "selfie", "polaroid"], ph: ["my photos", "our photos", "the wall", "on the wall", "add a photo", "new photo"] },
 };
 
 export function normalize(text) {

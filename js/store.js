@@ -24,6 +24,8 @@ const DEFAULTS = {
     mic: false,
     spice: 1.0,              // 0 = sweet, 1 = flirty, 2 = extra
     chattiness: 1,           // 0 = quiet, 1 = balanced, 2 = chatty
+    pitch: 0.9,
+    rate: 0.97,
     effects: true,
   },
   recent: [],                // rolling ledger of recently-spoken lines (anti-repeat)
