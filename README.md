@@ -22,9 +22,12 @@ Pages.
   always-visible **×** to remove, click one for a full-size **lightbox** with
   next/prev, **captions** and delete, and the 📷 button opens the whole **gallery**.
   Photos are downscaled and stored *only on that device* — nothing is ever uploaded
-- The room is a hand-drawn scene (window, curtains, bookshelf, desk, armchair,
-  rug, lamp, plants, a cat) that turns to night with the clock, and you can
-  **pet Blaze** by tapping him
+- The room is a hand-drawn scene (window with curtains, bookshelf, desk,
+  armchair, rug, lamp, plants, a cat, a wall clock) that turns to night with the
+  clock. A **light switch** (top-left) cycles auto / day / night, you can **pet
+  Blaze** by tapping him, and you can **drag photos on the wall to rearrange them**
+- Voice help lives in [`docs/VOICE.md`](docs/VOICE.md) — how to install a
+  genuinely human (RHVoice / Piper) voice, since browser quality comes from the OS
 - Offline browser voice: he can speak and listen (Web Speech API). He scores the
   available voices, auto-picks the most natural **male** one, and speaks sentence
   by sentence with natural pauses. Pitch, speed, voice and a "test voice" button

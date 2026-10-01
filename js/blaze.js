@@ -1,5 +1,7 @@
 // Blaze — the little guy himself. Mood, movement, gestures.
 
+import { store } from "./store.js";
+
 const MOODS = ["idle", "happy", "love", "think", "surprised", "sad", "sleepy", "smug", "shy"];
 
 class Blaze {
@@ -136,16 +138,12 @@ export const blaze = new Blaze();
 // ---------------- time of day ----------------
 export function applyTimeOfDay() {
   const h = new Date().getHours();
-  const night = h >= 19 || h < 6;
+  const mode = store.pref("lightMode", "auto");
+  let night;
+  if (mode === "day") night = false;
+  else if (mode === "night") night = true;
+  else night = h >= 19 || h < 6;
   document.body.classList.toggle("night", night);
   document.body.classList.toggle("day", !night);
-  const celestial = document.getElementById("celestial");
-  if (celestial) {
-    if (night) { celestial.style.left = "22%"; celestial.style.top = "22%"; }
-    else {
-      const t = (h - 6) / 12; // 0..1 across the day
-      celestial.style.left = (12 + t * 72) + "%";
-      celestial.style.top = (56 - Math.sin(Math.PI * t) * 42) + "%";
-    }
-  }
+  return night;
 }

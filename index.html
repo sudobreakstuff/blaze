@@ -145,6 +145,16 @@
         </g>
       </g>
 
+      <!-- wall clock -->
+      <g>
+        <circle cx="856" cy="88" r="30" fill="#3a2c3f"/>
+        <circle cx="856" cy="88" r="24" fill="#f3e8d4"/>
+        <circle cx="856" cy="88" r="24" fill="none" stroke="#c9b491" stroke-width="2"/>
+        <line x1="856" y1="88" x2="856" y2="72" stroke="#3a2c3f" stroke-width="4" stroke-linecap="round"/>
+        <line x1="856" y1="88" x2="870" y2="92" stroke="#3a2c3f" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="856" cy="88" r="3" fill="#e8562a"/>
+      </g>
+
       <!-- ===== FLOOR ITEMS ===== -->
       <!-- rug -->
       <ellipse cx="450" cy="548" rx="250" ry="76" fill="#b8795a"/>
@@ -185,38 +195,66 @@
       </g>
 
       <!-- cat on rug -->
-      <g transform="translate(592,520)">
-        <ellipse cx="30" cy="26" rx="34" ry="18" fill="#f5d9a8"/>
-        <path d="M10 16 q-12 -4 -16 8" stroke="#e0b878" stroke-width="9" fill="none" stroke-linecap="round"/>
-        <circle cx="6" cy="12" r="14" fill="#f0cf98"/>
-        <path d="M-4 4 l-2 -12 l12 6z" fill="#f0cf98"/><path d="M14 2 l10 -8 l-2 12z" fill="#f0cf98"/>
-        <circle cx="2" cy="12" r="2.2" fill="#3a2a1a"/><circle cx="11" cy="12" r="2.2" fill="#3a2a1a"/>
-        <path d="M6 18 q3 3 6 0" stroke="#3a2a1a" stroke-width="1.6" fill="none"/>
+      <g transform="translate(560,486)">
+        <ellipse cx="44" cy="90" rx="52" ry="12" fill="#000" opacity="0.12"/>
+        <path d="M80 76 q42 -2 32 -36 q-5 -15 -22 -8" stroke="#e6bf82" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <path d="M6 82 q0 -52 38 -52 q38 0 38 52 z" fill="#f3d29a"/>
+        <path d="M22 82 q0 -36 22 -36 q22 0 22 36 z" fill="#fdeed4"/>
+        <ellipse cx="27" cy="80" rx="11" ry="8" fill="#fdeed4"/>
+        <ellipse cx="61" cy="80" rx="11" ry="8" fill="#fdeed4"/>
+        <circle cx="44" cy="26" r="24" fill="#f5d9a8"/>
+        <path d="M24 12 L18 -10 L40 6 Z" fill="#f5d9a8"/>
+        <path d="M64 12 L70 -10 L48 6 Z" fill="#f5d9a8"/>
+        <path d="M28 8 L25 -3 L37 5 Z" fill="#ffb3c6"/>
+        <path d="M60 8 L63 -3 L51 5 Z" fill="#ffb3c6"/>
+        <path d="M38 5 q6 -4 12 0" stroke="#e6bf82" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M30 27 q6 7 12 0" stroke="#4a3620" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M46 27 q6 7 12 0" stroke="#4a3620" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M44 37 l-3 3 h6 z" fill="#ff8fa6"/>
+        <path d="M44 40 q-4 4 -8 1 M44 40 q4 4 8 1" stroke="#4a3620" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <g stroke="#d8c4a0" stroke-width="1.6" stroke-linecap="round">
+          <path d="M24 35 q-10 -2 -16 2"/><path d="M24 39 q-10 2 -16 6"/>
+          <path d="M64 35 q10 -2 16 2"/><path d="M64 39 q10 2 16 6"/>
+        </g>
+        <ellipse cx="28" cy="37" rx="5" ry="3" fill="#ffb3c6" opacity="0.55"/>
+        <ellipse cx="60" cy="37" rx="5" ry="3" fill="#ffb3c6" opacity="0.55"/>
       </g>
 
       <!-- desk (front right) -->
       <g>
-        <rect x="700" y="470" width="280" height="16" rx="6" fill="url(#woodG)"/>
-        <rect x="712" y="486" width="14" height="110" fill="#8f6242"/>
-        <rect x="954" y="486" width="14" height="110" fill="#8f6242"/>
+        <ellipse cx="838" cy="588" rx="178" ry="16" fill="#000" opacity="0.14"/>
+        <!-- legs + stretcher -->
+        <rect x="700" y="492" width="17" height="96" rx="3" fill="#8a5f3f"/>
+        <rect x="959" y="492" width="17" height="96" rx="3" fill="#8a5f3f"/>
+        <rect x="710" y="540" width="256" height="12" rx="4" fill="#7d5233"/>
+        <!-- apron + drawer -->
+        <rect x="698" y="470" width="280" height="28" rx="5" fill="#a9744c"/>
+        <rect x="790" y="475" width="96" height="17" rx="3" fill="#c68d63"/>
+        <rect x="828" y="481" width="20" height="6" rx="3" fill="#6b4630"/>
+        <!-- top -->
+        <rect x="690" y="452" width="296" height="20" rx="6" fill="url(#woodG)"/>
+        <rect x="690" y="452" width="296" height="7" rx="3" fill="#d9a879" opacity="0.65"/>
         <!-- monitor -->
-        <rect x="795" y="366" width="150" height="100" rx="10" fill="url(#darkG)"/>
-        <rect x="803" y="374" width="134" height="84" rx="5" fill="url(#screenG)"/>
-        <path d="M812 382 h40 v24 h-40z" fill="#ffffff" opacity="0.22"/>
-        <rect x="862" y="466" width="16" height="12" fill="#232936"/>
-        <rect x="842" y="476" width="56" height="8" rx="4" fill="#232936"/>
-        <!-- keyboard -->
-        <rect x="742" y="452" width="120" height="16" rx="4" fill="#e9e3d8"/>
-        <rect x="748" y="456" width="108" height="8" rx="2" fill="#b9b2a5" opacity="0.7"/>
+        <rect x="756" y="336" width="164" height="108" rx="10" fill="url(#darkG)"/>
+        <rect x="764" y="344" width="148" height="90" rx="5" fill="url(#screenG)"/>
+        <path d="M776 354 h50 v30 h-50z" fill="#ffffff" opacity="0.18"/>
+        <path d="M846 364 l30 24 v-32 z" fill="#ffffff" opacity="0.10"/>
+        <rect x="830" y="444" width="14" height="10" fill="#232936"/>
+        <rect x="808" y="452" width="60" height="9" rx="4" fill="#232936"/>
+        <!-- keyboard + mouse -->
+        <rect x="712" y="434" width="128" height="18" rx="5" fill="#efe9de"/>
+        <rect x="718" y="439" width="116" height="8" rx="2" fill="#c3bcaf" opacity="0.7"/>
+        <ellipse cx="860" cy="445" rx="10" ry="7.5" fill="#efe9de"/>
         <!-- mug -->
-        <rect x="884" y="446" width="20" height="24" rx="4" fill="#e08cae"/>
-        <path d="M904 452 h8 a8 8 0 0 1 0 14 h-8" fill="none" stroke="#e08cae" stroke-width="4"/>
+        <rect x="886" y="428" width="20" height="24" rx="4" fill="#e08cae"/>
+        <path d="M906 434 h7 a7 7 0 0 1 0 12 h-7" fill="none" stroke="#e08cae" stroke-width="3.5"/>
         <!-- desk plant -->
-        <g transform="translate(706,414)">
-          <path d="M12 32 q-12 -6 -10 -22 q10 2 10 22z" fill="#5fb56a"/>
-          <path d="M12 32 q12 -6 12 -24 q-12 4 -12 24z" fill="#6bc47a"/>
-          <path d="M12 32 q-2 -18 2 -28 q6 14 -2 28z" fill="#7fd08a"/>
-          <rect x="0" y="32" width="24" height="18" rx="3" fill="#d98f6b"/>
+        <g transform="translate(698,410)">
+          <path d="M14 40 q-14 -6 -12 -24 q12 2 12 24z" fill="#5fb56a"/>
+          <path d="M14 40 q14 -6 14 -26 q-14 4 -14 26z" fill="#6bc47a"/>
+          <path d="M14 40 q-2 -20 2 -30 q6 15 -2 30z" fill="#7fd08a"/>
+          <rect x="0" y="40" width="28" height="20" rx="3" fill="#d98f6b"/>
+          <rect x="-2" y="38" width="32" height="6" rx="3" fill="#c47a56"/>
         </g>
       </g>
 
@@ -359,6 +397,7 @@
     </svg>
 
     <div class="hearts" id="hearts"></div>
+    <button class="light-switch" id="light-switch" title="room light — auto / day / night">🌗</button>
     <div class="drop-hint" id="drop-hint">drop photos anywhere to pin them on the wall 📷</div>
 
     <div class="bubble" id="bubble" hidden>
@@ -420,6 +459,7 @@
       <label class="row slider"><span>⏩ Speed</span>
         <input type="range" id="pref-rate" min="0.7" max="1.3" step="0.02" value="0.97">
       </label>
+      <div class="photo-hint">not human enough? <a href="https://github.com/sudobreakstuff/blaze/blob/main/docs/VOICE.md" target="_blank" rel="noopener">install a neural voice →</a></div>
 
       <div class="row"><span>📷 Wall photos</span>
         <span class="mini-actions">

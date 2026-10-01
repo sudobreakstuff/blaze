@@ -26,6 +26,7 @@ const DEFAULTS = {
     chattiness: 1,           // 0 = quiet, 1 = balanced, 2 = chatty
     pitch: 0.9,
     rate: 0.97,
+    lightMode: "auto",       // auto | day | night
     effects: true,
   },
   recent: [],                // rolling ledger of recently-spoken lines (anti-repeat)

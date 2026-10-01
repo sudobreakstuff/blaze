@@ -91,6 +91,10 @@ function boot() {
   setupDropZone();
   $("blaze").addEventListener("click", petBlaze);
 
+  // room light switch
+  $("light-switch").textContent = LIGHT_ICON[store.pref("lightMode", "auto")] || "🌗";
+  $("light-switch").addEventListener("click", cycleLight);
+
   ["voice", "mic", "notify", "effects"].forEach((k) => {
     $("pref-" + k).addEventListener("change", async (e) => {
       store.setPref(k, e.target.checked);
@@ -112,11 +116,38 @@ function boot() {
 
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("settings").hidden = true; });
   inputEl.addEventListener("focus", () => brain.touch());
+
+  maybeVoiceHint();
+}
+
+function maybeVoiceHint() {
+  setTimeout(() => {
+    if (store.pref("voiceHintShown", false) || !store.pref("voice", true)) return;
+    const v = pickBestVoice();
+    const poor = !v || /espeak|compact|robot/i.test(v.name) || v.localService !== false;
+    if (poor) {
+      store.setPref("voiceHintShown", true);
+      emit({ text: "psst — if my voice sounds robotic, that's the browser's fault, not mine. ⚙ → voice has a link to install a proper one.", mood: "shy" });
+    }
+  }, 7000);
 }
 
 function makeLights() {
   const el = $("lights"); if (!el) return;
   for (let i = 0; i < 12; i++) { const s = document.createElement("i"); s.style.left = (3 + i * 8.4) + "%"; el.appendChild(s); }
+}
+
+const LIGHT_ICON = { auto: "🌗", day: "☀️", night: "🌙" };
+function cycleLight() {
+  const order = ["auto", "day", "night"];
+  const cur = store.pref("lightMode", "auto");
+  const next = order[(order.indexOf(cur) + 1) % order.length];
+  store.setPref("lightMode", next);
+  applyTimeOfDay();
+  const btn = $("light-switch");
+  btn.textContent = LIGHT_ICON[next];
+  btn.title = "room light: " + next + " (tap to change)";
+  brain.touch();
 }
 
 let lastPet = 0;
@@ -294,7 +325,7 @@ const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 let voices = [];
 const FEMALE_HINTS = ["female", "zira", "hazel", "samantha", "karen", "moira", "tessa", "victoria", "fiona", "susan", "serena", "maria", "anna", "linda", "heather", "emily", "amelie", "joanna", "salli", "kendra", "kimberly", "ivy", "raveena", "catherine", "sonia", "natasha", "aria", "jenny", "michelle", "google uk english female", "google us english"];
 const MALE_HINTS = ["male", "david", "mark", "guy", "george", "james", "daniel", "alex", "fred", "tom", "ryan", "oliver", "arthur", "liam", "sean", "brian", "matthew", "christopher", "eric", "paul", "richard", "thomas", "william", "rishi", "yuri", "dmitri", "en-gb-wls", "m3", "m4", "m5", "m6", "m7"];
-const QUALITY = [["natural", 45], ["neural", 45], ["wavenet", 35], ["online", 30], ["google", 28], ["premium", 22], ["enhanced", 22], ["siri", 28], ["compact", -18], ["espeak", -22], ["robot", -18]];
+const QUALITY = [["natural", 60], ["neural", 60], ["piper", 55], ["wavenet", 45], ["google", 40], ["online", 36], ["siri", 32], ["cloud", 30], ["premium", 28], ["enhanced", 28], ["multilingual", 20], ["compact", -22], ["espeak", -26], ["robot", -20]];
 
 function gender(v) {
   const n = (v.name + " " + (v.voiceURI || "")).toLowerCase();
@@ -309,7 +340,7 @@ function voiceScore(v) {
   if (/en-(gb|za|au|nz)/i.test(v.lang)) s += 8;
   s += gender(v) === "m" ? 60 : gender(v) === "f" ? -30 : 0;
   for (const [k, w] of QUALITY) if (n.includes(k)) s += w;
-  if (v.localService === false) s += 14;
+  if (v.localService === false) s += 18;
   return s;
 }
 function pickBestVoice() { return voices.length ? voices.slice().sort((a, b) => voiceScore(b) - voiceScore(a))[0] : null; }

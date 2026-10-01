@@ -37,7 +37,10 @@ body.night .room .sun{ opacity:0; }
 .photowall::-webkit-scrollbar{ display:none; }
 .photo{ position:relative; width:clamp(84px,9vw,122px); background:#fff; border-radius:4px; padding:7px 7px 20px;
   box-shadow:0 8px 18px rgba(0,0,0,.34); transform:rotate(var(--tilt,0deg)); cursor:zoom-in; transition:transform .16s ease; }
+.photo{ touch-action:none; user-select:none; }
 .photo:hover{ transform:rotate(0deg) scale(1.05); z-index:4; }
+.photo.dragging{ z-index:30; cursor:grabbing; box-shadow:0 22px 40px rgba(0,0,0,.45); transition:none; }
+.photowall.drop-active{ outline:3px dashed rgba(255,255,255,.35); outline-offset:6px; border-radius:16px; }
 .photo img{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; border-radius:2px; background:#eee; }
 .photo::before{ content:""; position:absolute; top:-7px; left:50%; transform:translateX(-50%) rotate(-4deg); width:30px; height:12px; background:rgba(255,255,255,.62); box-shadow:0 1px 2px rgba(0,0,0,.15); }
 .photo .cap{ position:absolute; left:0; right:0; bottom:4px; text-align:center; font-size:10px; color:#8a6b7a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:0 6px; }
@@ -69,6 +72,9 @@ body.night .room .sun{ opacity:0; }
 .gcard .edit{ left:-9px; background:#4fb0a5; }
 .gallery .g-empty{ color:#c9b8c9; text-align:center; margin:40px auto; grid-column:1/-1; }
 
+.light-switch{ position:absolute; top:12px; left:12px; z-index:12; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.25);
+  background:rgba(20,14,28,.5); color:#fff; font-size:19px; cursor:pointer; backdrop-filter:blur(6px); transition:transform .15s, background .15s; }
+.light-switch:hover{ transform:scale(1.08); background:rgba(20,14,28,.72); }
 .drop-hint{ position:absolute; inset:0; z-index:40; display:none; align-items:center; justify-content:center; text-align:center; padding:20px;
   background:rgba(63,111,125,.42); backdrop-filter:blur(2px); color:#fff; font-size:20px; font-weight:800; border:4px dashed rgba(255,255,255,.7); }
 .scene.dragover .drop-hint{ display:flex; }
@@ -191,6 +197,7 @@ select{ background:rgba(255,255,255,.08); color:var(--ink); border:1px solid rgb
 .mini-actions{ display:flex; gap:6px; align-items:center; }
 #btn-add-photos,#btn-open-gallery,#btn-clear-photos{ width:auto; padding:0 12px; font-size:13px; }
 .photo-hint{ color:var(--ink-dim); font-size:11.5px; padding:6px 0 10px; }
+.photo-hint a{ color:var(--accent); }
 .primary{ width:100%; margin-top:16px; background:linear-gradient(180deg,var(--accent),#ef5f2f); color:#fff; border:none; padding:13px; border-radius:14px; font-size:15px; font-weight:700; cursor:pointer; }
 .debug{ position:fixed; right:8px; bottom:8px; max-width:340px; background:rgba(0,0,0,.78); color:#7fffd4; font:11px/1.4 ui-monospace,monospace; padding:8px 10px; border-radius:8px; z-index:60; white-space:pre-wrap; }
 .debug[hidden]{ display:none; }

@@ -75,9 +75,58 @@ function render() {
     rm.addEventListener("click", (ev) => { ev.stopPropagation(); removePhoto(p.id); });
     d.appendChild(img); d.appendChild(rm);
     if (p.caption) { const c = document.createElement("div"); c.className = "cap"; c.textContent = p.caption; d.appendChild(c); }
-    d.addEventListener("click", () => openLightbox(idx(p.id)));
+    d.dataset.id = p.id;
     wallEl.appendChild(d);
   }
+}
+
+// ---------------- drag to rearrange ----------------
+let dragSetup = false;
+function indexAt(x, y, skipId) {
+  const cards = [...wallEl.querySelectorAll(".photo")];
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].dataset.id === skipId) continue;
+    const r = cards[i].getBoundingClientRect();
+    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return i;
+  }
+  return null;
+}
+function setupDrag() {
+  if (dragSetup || !wallEl) return;
+  dragSetup = true;
+  wallEl.addEventListener("pointerdown", (e) => {
+    const card = e.target.closest(".photo");
+    if (!card || e.target.closest(".rm")) return;
+    const id = card.dataset.id;
+    const startIdx = idx(id);
+    let dragging = false, sx = e.clientX, sy = e.clientY;
+    const move = (ev) => {
+      if (!dragging) {
+        if (Math.hypot(ev.clientX - sx, ev.clientY - sy) < 6) return;
+        dragging = true; card.classList.add("dragging"); wallEl.classList.add("drop-active");
+      }
+      ev.preventDefault();
+      card.style.transform = `translate(${ev.clientX - sx}px, ${ev.clientY - sy}px) scale(1.06) rotate(0deg)`;
+    };
+    const up = (ev) => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      wallEl.classList.remove("drop-active");
+      if (dragging) {
+        card.classList.remove("dragging"); card.style.transform = "";
+        const target = indexAt(ev.clientX, ev.clientY, id);
+        if (target != null && target !== startIdx) {
+          const [it] = list.splice(startIdx, 1);
+          list.splice(target, 0, it);
+          persist(); render();
+        } else render();
+      } else {
+        openLightbox(startIdx);
+      }
+    };
+    window.addEventListener("pointermove", move, { passive: false });
+    window.addEventListener("pointerup", up);
+  });
 }
 
 // ---------------- lightbox ----------------
@@ -174,6 +223,7 @@ export const photos = {
     onChange = callbacks.onChange || (() => {});
     onNote = callbacks.onNote || (() => {});
     render();
+    setupDrag();
   },
   async addFiles(fileList) {
     const files = [...(fileList || [])].filter((f) => f && f.type && f.type.startsWith("image/"));
